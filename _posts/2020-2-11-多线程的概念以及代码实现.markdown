@@ -1,0 +1,86 @@
+#多线程的基本概念
+
+##进程
+
+电脑中时会有很多单独运行的程序，每个程序有一个独立的进程，而进程之间是相互独立存在的。比如QQ、酷狗播放器等
+
+##线程
+
+进程想要执行任务就需要依赖线程。换句话说，就是进程中的最小执行单位就是线程，并且一个进程中至少有一个线程。
+
+##多线程
+
+是指从软件或者硬件上实现多个线程并发执行的技术。
+
+##cpu
+
+cpu即中央处理器。值得一提的是cpu处理众多任务时并不是同时进行，
+而是以极高的频率在不同任务之间快速切换，但由于速度太快，宏观上表现为多个任务在同时进行
+
+#用代码实现的简单多线程
+
+##java实现的简单多线程
+
+###runnable接口方法实现多线程，
+
+首先创立一个TextRunnable类
+
+
+```
+public class TextRunnable implements Runnable {
+    public void run() {
+        for (int i=0;i < 10;i++){
+            System.out.println("这是Runnable接口线程的逻辑代码"+i);
+        }
+    }
+}
+
+```
+
+然后在text中实现main方法并使用TextRunnable
+
+```
+public class text {
+    public static void main(String[] args) {
+        TextRunnable tx = new TextRunnable();
+        Thread thread = new Thread(tx);
+        thread.start();
+        for (int i=0;i < 10;i++){
+            System.out.println("这是main线程的逻辑代码"+i);
+        }
+    }
+}
+```
+
+运行结果如图
+![](https://i.imgur.com/QHOwwVL.png)
+
+###注意
+
+从图中可以看出这种写法下main和runnable两种线程交错进行，这说明这两个线程异步
+
+###Thread实现多线程
+
+```
+public class TextThread extends Thread {
+    public void run() {
+        for (int i=0;i < 10;i++){
+            System.out.println("这是Threaf线程的逻辑代码"+i);
+        }
+    }
+}
+```
+
+```
+public class text {
+    public static void main(String[] args) {
+        Thread thread = new TextThread();
+        thread.start();
+        for (int i=0;i < 10;i++){
+            System.out.println("这是main线程的逻辑代码"+i);
+        }
+    }
+}
+```
+
+运行结果和上面一致
