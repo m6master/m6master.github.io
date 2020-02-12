@@ -828,3 +828,5 @@ page:
   #   src='http://push.zhanzhang.baidu.com/push.js'
   #   defer='defer'
   # ></script>
+
+theme: jekyll-theme-time-machine
