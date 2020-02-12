@@ -1,0 +1,70 @@
+---
+tags:
+- 编程及算法
+---
+# 快速幂
+
+## 递归算法
+
+1）当b是奇数时，那么有 a^b = a * a^b
+
+2）当b是偶数时，那么有 a^b = a^(b/2) * a^(b/2)
+
+举个例子？
+
+1. 2^10 = 2^5 * 2^5
+2. 2^5 = 2 * 2^4
+3. 2^4 = 2^2 * 2^2
+4. 2^2 = 2^1 * 2^1
+5. 2^1 = 2 * 2^0
+
+```c
+typedef long long ll;
+ll binaryPow(ll a, ll b, ll m){
+	if(b == 0)
+		return 1;
+	else if(b % 2 == 1)
+		return a * binaryPow(a, b - 1, m) % m;
+	else{
+		ll num = binaryPow(a, b/2, m) % m;	//优化 
+		return num * num % m;// 不直接写成return binaryPow(a, b/2, m) * binaryPow(a, b/2, m)
+	}
+```
+
+## 迭代算法
+
+对于 a ^ b来说，若果把 b 写成2 进制，那么b 就可以写成若干二次幂之和，如13 的二进制 1101，于是3 号位 、2号位、0号位就都是1，那么就可以得到13 = 2^3 + 2^2 + 2^1 = 8 + 4 + 1。所以a ^13 = a^8 * a^4 * a^1。<br>
+
+于是可以得到计算a^b的大致思路：令i 从0到k枚举b的二进制的每一位，如果为1 那就累计a^(2^i)。<br>
+
+注意a^(2^k)……、a^8、a^4、a^2、a^1前一项总是等于后一项的平方。<br>
+
+具体步骤。<br>
+
+（1）初始令ans = 1,用来存放累积的结果。<br>
+
+（2）判断b的二进制末尾是否为1 ，（及判断 b&1 是否为 1），也可以理解为判断b 是否为奇数。如果是的话，令ans乘上a的值。<br>
+
+（3）令a平方，并使b右移一位，（也可以理解为，b/2）<br>
+
+（4）只要b 大于0，就返回（2）。
+
+```
+typedef long long ll
+ll binaryPow(ll a, ll b, ll m){
+	ll ans = 1;
+	while(b > 0){
+		if(b & 1){
+			ans = ans * a % m;
+		}
+		a = a * a % m;
+		b >>= 1; 
+	} 
+	return ans;
+}
+```
+
+
+
+
+
