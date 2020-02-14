@@ -156,29 +156,6 @@ comment_gitment_repo: comments
 comment_gitment_clientId: 7f8a837201c79d483bd4
 comment_gitment_clientSecret: 43f8320150306cc20dade24cc2c30598d02f5787
 
-comments:
-  enable: true # 需要在script中引入
-  alert: |
-    <div class="v"></div>
-    <script
-      src='https://cdn.jsdelivr.net/npm/valine'
-      defer='defer'
-      onload='
-        new Valine({
-          "el": ".v",
-          "appId": "9hABRddSuEkTgqLrt1VSK5B1-gzGzoHsz",
-          "appKey": "NJ7RwmgrxsF7KDzlqU7YewlL",
-          "notify": "true",
-          "verify": "true",
-          "avatar": "identicon",
-          "placeholder": "在这里评论吧！",
-          "visitor": true,
-          "highlight": true,
-          "avatarForce": false,
-          "recordIP": true
-        })'
-    ></script>
-
 post:
   date:
     enable: true
