@@ -149,29 +149,6 @@ archive:
     enable: true
     alert: 篇博文。长路漫漫！
 
-comments:
-  enable: true # 需要在script中引入
-  alert: |
-    <div class="v"></div>
-    <script
-      src='https://cdn.jsdelivr.net/npm/valine'
-      defer='defer'
-      onload='
-        new Valine({
-          "el": ".v",
-          "appId": "9hABRddSuEkTgqLrt1VSK5B1-gzGzoHsz",
-          "appKey": "NJ7RwmgrxsF7KDzlqU7YewlL",
-          "notify": "true",
-          "verify": "true",
-          "avatar": "identicon",
-          "placeholder": "在这里评论吧！",
-          "visitor": true,
-          "highlight": true,
-          "avatarForce": false,
-          "recordIP": true
-        })'
-    ></script>
-
 post:
   date:
     enable: true
