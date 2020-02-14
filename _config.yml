@@ -149,10 +149,13 @@ archive:
     enable: true
     alert: 篇博文。长路漫漫！
     
-#gitment
-comment_gitment_repo: m6master.github.io
-comment_gitment_clientId: 7f8a837201c79d483bd4
-comment_gitment_clientSecret: 43f8320150306cc20dade24cc2c30598d02f5787
+gitment:
+  enable: true
+  githubID: m6master
+  repo: m6master.github.io
+  ClientID: 7f8a837201c79d483bd4
+  ClientSecret: 43f8320150306cc20dade24cc2c30598d02f5787
+  lazy: true
 
 post:
   date:
