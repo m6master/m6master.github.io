@@ -83,7 +83,7 @@ tags:
 首先创立一个TextRunnable类
 
 
-```
+```java
 public class TextRunnable implements Runnable {
     public void run() {
         for (int i=0;i < 10;i++){
@@ -96,7 +96,7 @@ public class TextRunnable implements Runnable {
 
 然后在text中实现main方法并使用TextRunnable
 
-```
+```java
 public class text {
     public static void main(String[] args) {
         TextRunnable tx = new TextRunnable();
@@ -118,7 +118,7 @@ public class text {
 
 ### Thread实现多线程
 
-```
+```java
 public class TextThread extends Thread {
     public void run() {
         for (int i=0;i < 10;i++){
@@ -128,7 +128,7 @@ public class TextThread extends Thread {
 }
 ```
 
-```
+```java
 public class text {
     public static void main(String[] args) {
         Thread thread = new TextThread();
