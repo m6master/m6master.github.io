@@ -1,0 +1,156 @@
+---
+tags:
+- 编程及算法
+---
+
+# 链表的概念
+
+	* 链表是一种物理存储结构上非连续，非顺序的存储结构，数据元素的逻辑顺序是通过链表中的指针链接次序实现的。
+
+# 链表的代码实现及基本操作
+
+节点的构造
+
+```c
+
+typedef struct _lnklist{
+	ElemType data;//存储数据
+    struct _lnklist *next;//指向下一节点
+};
+typedef struct _lnklist Node;
+typedef struct _lnklist *LinkList;
+
+```
+
+初始化链表
+
+```c
+
+LinkList creatLink(){
+	LinkList head;//头节点
+	head=(LinkList)malloc(sizeof(Node));//分配内存
+	if(!head){
+		return NULL;
+	}else{
+		head->next=NULL;
+		return head;
+	}
+}
+
+```
+
+创建节点
+
+```c 
+
+LinkList creatNode(int n){
+	LinkList node;
+	node=(LinkList)malloc(sizeof(Node));//分配内存
+	if(!node){
+		return NULL;
+	}else{
+		node->data=n;
+		node->next=NULL;
+		return node;
+	}
+}
+
+```
+
+求表长
+
+```c
+
+int LengthOfLinkedList(LinkList l){
+	LinkList p = l;
+	int n = 0;
+	while (p){
+		n++;
+		p = p->next;
+	}
+	return n;
+}
+
+```
+
+插入数据
+
+```c
+
+int insert(LinkList l, int n){//尾插法
+	LinkList a = creatNode(n);
+	LinkList b;
+	if(!a){
+		return 0;
+	}
+	if(!(l->next)){
+		l->next = a;
+	}else{
+		b = l->next;
+		while(b->next!=NULL){
+			b = b->next;
+		}
+		b->next = a;
+	}
+	return 1;
+}
+
+```
+
+删除数据
+
+```c
+
+void deleteNode(LinkList l, int n){//删除第n个节点
+	LinkList a, b;
+	a = l;
+	int i = 0;
+	while(i<n&&a){
+		i++;
+		a = a->next;
+	}
+	if(!a){
+		printf("无该节点");
+	}else{
+		b = a->next;
+		a->next = a->next->next;
+		free(b);
+	}
+}
+
+```
+
+遍历输出链表数据
+
+```c
+
+void printfLink(LinkList l){
+	LinkList a = l->next;
+	while(a){
+		printf("%d", a->data);
+		a = a->next;
+	}
+	printf("\n");
+}
+
+```
+
+main函数
+
+```c
+
+int main(void){
+	LinkList l = creatLink();
+	for (int i = 1; i <= 3; i++){
+		insert(l, i);
+	}
+	printfLink(l);
+	int n = LengthOfLinkedList(l);
+	printf("%d\n", n);
+	deleteNode(l, 2);
+	printfLink(l);
+	n = LengthOfLinkedList(l);
+	printf("%d\n", n);
+}
+
+```
