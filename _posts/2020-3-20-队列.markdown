@@ -1,0 +1,151 @@
+---
+tags
+- 编程及算法
+---
+
+# 队列
+
+队列是一种先进先出的数据结构，也就是一头进，另一头出
+
+# 队列的代码实现
+
+## 顺序队列
+
+### 单向数组
+
+数组的实现比较简单，用两个int变量front，rear分别指向头和尾，插入时rear++，删除时front--。但这种方式很明显会产生空间浪费，于是便想到将数组头尾相连避免空间浪费，即为循环数组。该方式实现与循环数组类似，代码就省略了（其实是懒癌犯了）。
+
+### 循环数组
+
+循环数组和单向数组的实现方式类似，唯一的区别就是头尾相连<br>
+代码如下
+
+### 初始化队列
+
+```c
+typedef struct{
+   QelemType  *base;
+   int front;
+   int rear;
+   }squene;
+
+void creatQuene(squene &s){
+	s.base=(QelemType *)malloc(sizeof(QelemType));
+	if(!s.base)
+		exit(-1);
+	s.front=0;
+	s,rear=0;
+}
+
+```
+
+### 插入
+
+```c
+void insert(squene &s,QelemType e){
+	if(((s.base+1) % MAXSIZE)==s.front){
+	printf("队满");
+	exit(-1);
+	}
+	s.base[s.rear]=e;
+	s.rear=(s.rear+1)%MAXSIZE;
+}
+```
+
+### 删除
+
+```c
+void dequene(squene &s,QelemType e){
+	if(s.rear==s.front){
+	printf("栈空");
+	exit(-1);
+	}
+	e=s.base[s.front];
+	s.front=(s.front+1)%MAXSIZE;
+}
+```
+
+### 求队列长度
+
+```c
+int length(squene s){
+	return (s.rear-s.front+1) % MAXSIZE;
+}	
+```
+
+### 遍历输出
+
+```c
+if(s.front>s.rear){
+		for (int i = s.front; i <= s.rear; i++){
+		printf("%d", s.base[i]);
+		}
+	}else{
+		for (int i = s.rear; i <= s.front; i++){
+		printf("%d", s.base[i]);
+		}
+	}
+```
+
+## 链式队列（着重）
+
+链表在头部删除，尾部插入较为简单。
+
+### 初始化队列
+
+```c
+typedef struct QNode{
+	QElemType data;
+	struct QNode *next;
+}Qnode,*Queneptr;	
+typedef struct{
+	Queneptr front;//队头指针
+	Queneptr rear;//队尾指针
+}LinkQuene;	
+
+Initquene(LinkQuene &s){
+	s.front=(Queneptr *)malloc(sizeof(Qnode));
+	if(!s.front)
+		exit(-1);
+	s.rear=s.front;
+	s.front->next=NULL;
+}
+
+```
+
+### 插入
+
+```c
+void insert(LinkQuene &s,QElemType e){
+	Queneptr p=(Queneptr *)malloc(sizeof(Qnode));
+	if(!p)
+		exit(-1);
+	p->data=e;
+	p->next=NULL;
+	s.rear->next = p;
+	s.rear = p;
+}
+```
+
+### 删除
+
+```c
+void del(LinkQuene &s,QElemType &e){
+	if(s.rear==NULL||s.front==NULL){
+		printf("对空");
+		exit(-1);
+	}
+	Queneptr a;
+	a = s.front->next;
+	e = a->data;
+	s.front->next = s.front->next->next;
+	if(s.rear==p)
+		s.rear=s.front;
+	free(a);
+}
+```
+
+### 求队列长度(遍历)
+
+和链表类似。
+
