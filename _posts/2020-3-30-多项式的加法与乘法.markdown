@@ -1,0 +1,196 @@
+---
+tags
+- 编程及算法
+---
+
+这是浙江大学mooc上的一道基础题，虽然是基础题，我还是花了近2个小时外加oj的错误提醒才完成该题。（我太菜了）
+原理之类的浙大mooc都有说明，此处便就放一个代码。（本次最大的收获是对调试的运用。）
+
+```c
+#include <stdio.h>
+#include <stdlib.h>
+
+typedef struct PolyNode *Polynomial;
+
+struct PolyNode{
+	int coef;//系数
+	int expon;//指数
+	Polynomial next;
+}PolyNode;//多项式节点
+
+int Attach(int coef, int expon, Polynomial *l);//在l后插入节点
+int mulAttach(int coef, int expon, Polynomial *l);//在l链表中按指数递减顺序插入节点
+Polynomial read(int n);//读入
+Polynomial sum(Polynomial p1,Polynomial p2);//加法
+Polynomial mul(Polynomial p1,Polynomial p2);//乘法
+void Printf(Polynomial p);
+
+int main(void){
+	Polynomial p1,p2; //建立变量
+	Polynomial he,ji; //建立答案
+	int n, m;
+
+	//读入多项式
+	scanf("%d", &n);
+	p1 = read(n);
+	scanf("%d", &m);
+	p2 = read(m);
+	if(p1&&p2){
+		//加法运算
+		he=sum(p1, p2);
+		//乘法运算
+		ji = mul(p1, p2);
+		//输出结果
+		Printf(ji);
+		printf("\n");
+		if(he==NULL){
+			printf("0 0");
+		}else{
+					Printf(he);
+		}
+	}else if(p1){
+		printf("0 0\n");
+		Printf(p1);
+	}else if(p2){
+		printf("0 0\n");
+		Printf(p2);
+	}else{
+		printf("0 0\n");
+		printf("0 0");
+	}
+	return 0;
+}
+//在l后面新加节点
+int Attach(int coef, int expon, Polynomial *l){
+	if(coef!=0){
+		Polynomial m = (Polynomial)malloc(sizeof(PolyNode));
+		if(!m)
+			return 0;
+		m->coef = coef;
+		m->expon = expon;
+		m->next = NULL;
+		(*l)->next = m;
+		*l = m;
+	}
+	return 1;
+}
+//在l中找寻位置插入
+int mulAttach(int coef, int expon, Polynomial *l){
+	if(coef!=0){
+		Polynomial a = *l;
+		while(a){
+			if(a->next==NULL&&a->expon!=expon){
+				Polynomial m = (Polynomial)malloc(sizeof(PolyNode));
+				if(!m)
+					return 0;
+				m->coef = coef;
+				m->expon = expon;
+				m->next = NULL;
+				a->next = m;
+				break;
+			}else if (a->expon>expon&&a->next->expon<expon){
+				Polynomial m = (Polynomial)malloc(sizeof(PolyNode));
+				if(!m)
+					return 0;
+				m->coef = coef;
+				m->expon = expon;
+				m->next = a->next;
+				a->next = m;
+				break;
+			}else if(a->expon==expon){
+				a->coef += coef;
+				break;
+			}else{
+				a = a->next;
+			}
+		}
+	}
+	return 1;
+}
+//读入·
+Polynomial read(int n){
+	Polynomial a = (Polynomial)malloc(sizeof(PolyNode));
+	Polynomial b = a;
+	int coef, expon;
+	a->next = NULL;
+	for (int i = 0; i < n; i++)
+	{
+		scanf("%d %d", &coef, &expon);
+		Attach(coef, expon, &b);
+	}
+	b = a;
+	a = a->next;
+	free(b);
+	return a;
+}
+//加法
+Polynomial sum(Polynomial p1,Polynomial p2){
+	Polynomial a = (Polynomial)malloc(sizeof(PolyNode));
+	Polynomial l1, l2,l3;
+	l1 = p1;
+	l2 = p2;
+	l3 = a;
+	while(l1&&l2){
+		if(l1->expon>l2->expon){
+			Attach(l1->coef, l1->expon, &l3);
+			l1 = l1->next;
+		}else if(l1->expon==l2->expon){
+			Attach((l1->coef+l2->coef), l1->expon, &l3);
+			l1 = l1->next;
+			l2 = l2->next;
+		}else{
+			Attach(l2->coef, l2->expon, &l3);
+			l2 = l2->next;
+		}
+	}
+	if(l1){
+		l3->next = l1;
+	}else{
+		l3->next = l2;
+	}
+	l3 = a;
+	a = a->next;
+	free(l3);
+	return a;
+}
+//乘法
+Polynomial mul(Polynomial p1,Polynomial p2){
+	Polynomial a = (Polynomial)malloc(sizeof(PolyNode));
+	Polynomial l1, l2,l3;
+	l1 = p1;
+	l2 = p2;
+	l3 = a;
+	while (l2){
+		Attach((l1->coef) * (l2->coef), l1->expon + l2->expon, &l3);
+		l2 = l2->next;
+	}
+	l2 = p2;
+	l1 = l1->next;
+	l3 = a;
+	a = a->next;
+	free(l3);
+	while (l1){
+		while (l2){
+			mulAttach((l1->coef) * (l2->coef), l1->expon + l2->expon, &a);
+			l2 = l2->next;
+		}
+		l2 = p2;
+		l1 = l1->next;
+	}
+	return a;
+}
+//遍历输出
+void Printf(Polynomial p){
+	Polynomial a = p;
+	while (a){
+		if(a->coef!=0){
+			printf("%d %d", a->coef, a->expon);
+			if (a->next){
+			printf(" ");
+		}
+		}
+		a = a->next;
+	}
+}
+
+```
