@@ -1,0 +1,64 @@
+---
+tags:
+- 编程及算法
+---
+
+# MySQL数据库软件
+
+	1. 配置
+		* MySQL服务器启动
+			1. 手动。
+			2. cmd—— services.msc 打开服务的窗口
+			3. 使用管理员打开cmd
+				*  net start mysql :启动mysql服务
+				*  net stop mysql：关闭mysql服务
+		
+		* MySQL登录
+			1. mysql -uroot -p**** ****代表密码（默认访问本地）
+			2. mysql -h+ip -uroot -p**** (访问ip地址的mysql）
+			3. mysql --host=ip --user=root --password=****
+		* MySQL退出
+			1. exit
+			2. quit
+		
+		* MySQL目录结构
+			1. 安装目录
+				* 配置文件 my.ini
+			2. 数据目录 
+				* 数据库：文件夹
+				* 表：文件
+				* 数据
+
+# SQL
+
+	1. SQL 通用语法
+		1. SQL语句可以单行或多行书写，以分号为结尾。
+		2. 使用空格和缩进提高可读性。
+		3. MySQL的SQL语句不区分大小写，一般关键词用大写。
+		4. 三种注释方式
+			* 单行注释：-- 注释内容（注意要有空格） 或 # 注释内容（mysql特有）
+			* 多行注释 /* 注释 */
+	2. SQL 分类
+		1. DDL 数据定义语言
+			* 用来定义数据库对象：数据库，表，列等
+		2. DML 数据操作语言
+			* 用来对数据库中表的记录增删改
+		3. DQL 数据查询语言
+			* 用来查询数据库中表的记录
+		4. DCL 数据控制语言
+			* 定义数据库的访问权限和安全级别，以及创建用户
+
+## DDL:操作数据库，表
+
+	1. 操作数据库：CRUD
+		1. C(create):创建
+			* create database 数据库名称;//单纯创建数据库
+			* create database if not exists 数据库名称;//先判断数据库是否存在，存在则不创建
+			* create database if not exists 数据库名称 character set 字符集;//创建时同时设置其字符集
+		2. R(retrieve):查询
+			* 查询所有数据库的名称：show databases;
+			* 查看某个数据库的创建语句（主要看字符集）：show create database 数据库名称;
+		3. U(update):修改
+		4. D(delete):删除
+		5. 使用数据库
+	2. 操作表
